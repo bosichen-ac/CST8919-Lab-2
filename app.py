@@ -2,7 +2,7 @@ import os
 from flask import Flask, redirect, render_template, request, url_for, g
 from werkzeug.middleware.proxy_fix import ProxyFix
 from auth0_server_python.auth_types import LogoutOptions
-from auth import auth0
+from auth import auth0, get_auth0
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -21,6 +21,8 @@ app.config.update(
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE='Lax',
 )
+
+auth0 = get_auth0()
 
 @app.before_request
 def store_request_response():
