@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protected Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <img src="https://cdn.auth0.com/quantum-assets/dist/latest/logos/auth0/auth0-lockup-en-ondark.png" alt="Auth0 Logo" class="logo">
+      <h1>Protected Page</h1>
+      <div class="profile-details">
+        {% if user.picture %}
+        <img src="{{ user.picture }}" alt="Profile" class="profile-pic-large">
+        {% endif %}
+      </div>
+      <div class="actions">
+        <a href="/" class="button">Back to Home</a>
+        <a href="/logout" class="button logout">Log Out</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
