@@ -43,16 +43,30 @@ state_store = MemoryStateStore()
 transaction_store = MemoryTransactionStore()
 
 # Initialize the Auth0 ServerClient
-auth0 = ServerClient(
-    domain=os.getenv('AUTH0_DOMAIN'),
-    client_id=os.getenv('AUTH0_CLIENT_ID'),
-    client_secret=os.getenv('AUTH0_CLIENT_SECRET'),
-    secret=os.getenv('AUTH0_SECRET'),
-    redirect_uri=os.getenv('AUTH0_REDIRECT_URI'),
-    state_store=state_store,
-    transaction_store=transaction_store,
-    authorization_params={
-        'scope': 'openid profile email',
-        'audience': os.getenv('AUTH0_AUDIENCE', '')  # Optional: for API access
-    }
-)
+# auth0 = ServerClient(
+#     domain=os.getenv('AUTH0_DOMAIN'),
+#     client_id=os.getenv('AUTH0_CLIENT_ID'),
+#     client_secret=os.getenv('AUTH0_CLIENT_SECRET'),
+#     secret=os.getenv('AUTH0_SECRET'),
+#     redirect_uri=os.getenv('AUTH0_REDIRECT_URI'),
+#     state_store=state_store,
+#     transaction_store=transaction_store,
+#     authorization_params={
+#         'scope': 'openid profile email',
+#         'audience': os.getenv('AUTH0_AUDIENCE', '')  # Optional: for API access
+#     }
+# )
+def get_auth0():
+    return ServerClient(
+        domain=os.getenv('AUTH0_DOMAIN'),
+        client_id=os.getenv('AUTH0_CLIENT_ID'),
+        client_secret=os.getenv('AUTH0_CLIENT_SECRET'),
+        secret=os.getenv('AUTH0_SECRET'),
+        redirect_uri=os.getenv('AUTH0_REDIRECT_URI'),
+        state_store=state_store,
+        transaction_store=transaction_store,
+        authorization_params={
+            'scope': 'openid profile email',
+            'audience': os.getenv('AUTH0_AUDIENCE', '')
+        }
+    )
