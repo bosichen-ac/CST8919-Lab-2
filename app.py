@@ -1,5 +1,6 @@
 import os
 from flask import Flask, redirect, render_template, request, url_for, g
+from werkzeug.middleware.proxy_fix import ProxyFix
 from auth0_server_python.auth_types import LogoutOptions
 from auth import auth0
 from dotenv import load_dotenv
@@ -7,6 +8,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(
+    app.wsgi_app,
+    x_proto=1,
+    x_host=1
+)
 app.secret_key = os.getenv('AUTH0_SECRET')
 
 # Configure session for Auth0
