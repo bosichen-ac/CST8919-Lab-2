@@ -1,0 +1,23 @@
+### Home page
+GET https://auth0-demo-bwdabuc0htbkbrb3.canadacentral-01.azurewebsites.net/
+Accept: text/html
+
+### Login page
+GET https://auth0-demo-bwdabuc0htbkbrb3.canadacentral-01.azurewebsites.net/login
+Accept: text/html
+
+### Protected page
+GET https://auth0-demo-bwdabuc0htbkbrb3.canadacentral-01.azurewebsites.net/protected
+Accept: text/html
+
+### Login Failure (Failed authentication callback)
+GET https://auth0-demo-bwdabuc0htbkbrb3.canadacentral-01.azurewebsites.net/callback
+Accept: text/html
+
+### Logout
+GET https://auth0-demo-bwdabuc0htbkbrb3.canadacentral-01.azurewebsites.net/logout
+Accept: text/html
+
+### Invalid page (generate 404 log)
+GET https://auth0-demo-bwdabuc0htbkbrb3.canadacentral-01.azurewebsites.net/not-found
+Accept: text/html
