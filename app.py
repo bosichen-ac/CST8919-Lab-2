@@ -1,4 +1,5 @@
 import os
+import logging
 from flask import Flask, redirect, render_template, request, url_for, g
 from werkzeug.middleware.proxy_fix import ProxyFix
 from auth0_server_python.auth_types import LogoutOptions
@@ -22,7 +23,8 @@ app.config.update(
     SESSION_COOKIE_SAMESITE='Lax',
 )
 
-# auth0 = get_auth0()
+logger = logging.getLogger(__name__)
+
 
 @app.before_request
 def store_request_response():
@@ -39,9 +41,13 @@ async def index():
 @app.route('/login')
 async def login():
     """Redirect to Auth0 login"""
-    auth0 = get_auth0()
-    authorization_url = await auth0.start_interactive_login({}, g.store_options)
-    return redirect(authorization_url)
+    try:
+        auth0 = get_auth0()
+        authorization_url = await auth0.start_interactive_login({}, g.store_options)
+        return redirect(authorization_url)
+    except Exception as e:
+        logger.error(f"Failed login attempt: {e}")
+        return "Login failed", 400
 
 @app.route('/callback')
 async def callback():
