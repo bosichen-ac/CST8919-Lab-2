@@ -22,7 +22,7 @@ app.config.update(
     SESSION_COOKIE_SAMESITE='Lax',
 )
 
-auth0 = get_auth0()
+# auth0 = get_auth0()
 
 @app.before_request
 def store_request_response():
@@ -32,18 +32,21 @@ def store_request_response():
 @app.route('/')
 async def index():
     """Home page - shows login button or user profile"""
+    auth0 = get_auth0()
     user = await auth0.get_user(g.store_options)
     return render_template('index.html', user=user)
 
 @app.route('/login')
 async def login():
     """Redirect to Auth0 login"""
+    auth0 = get_auth0()
     authorization_url = await auth0.start_interactive_login({}, g.store_options)
     return redirect(authorization_url)
 
 @app.route('/callback')
 async def callback():
     """Handle Auth0 callback after login"""
+    auth0 = get_auth0()
     try:
         result = await auth0.complete_interactive_login(str(request.url), g.store_options)
         return redirect(url_for('index'))
@@ -54,6 +57,7 @@ async def callback():
 @app.route('/profile')
 async def profile():
     """Protected route - shows user profile"""
+    auth0 = get_auth0()
     user = await auth0.get_user(g.store_options)
     
     if not user:
@@ -63,6 +67,7 @@ async def profile():
 
 @app.route("/protected")
 async def protected():
+    auth0 = get_auth0()
     user = await auth0.get_user(g.store_options)
     
     if not user:
@@ -74,6 +79,7 @@ async def protected():
 async def logout():
     """Logout and redirect to Auth0 logout"""
     options = LogoutOptions(return_to=url_for("index", _external=True))
+    auth0 = get_auth0()
     logout_url = await auth0.logout(options, g.store_options)
     return redirect(logout_url)
 
